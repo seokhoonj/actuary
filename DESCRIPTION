@@ -1,12 +1,15 @@
 Package: actuary
 Type: Package
-Title: What the Package Does in One 'Title Case' Line
+Title: Actuarial analytics and modeling package
 Version: 1.0
 Date: 2021-02-03
-Author: Your Name
-Maintainer: Your Name <your@email.com>
-Description: One paragraph description of what the package does as one
-       or more full sentences.
-License: GPL (>= 2)
-Imports: Rcpp (>= 1.0.5)
+Author: Seokhoon Joo 
+Maintainer: Seokhoon Joo <seokhoonj@gmail.com>
+Description: Actuarial analytics and modeling package based on data
+License: MIT + file LICENSE
+Encoding: UTF-8   
+LazyData: true
+Depends: R (>= 3.5.0)
+Imports: Rcpp (>= 1.0.5), data.table (>= 1.13.0), stringr (>= 1.4.0), openssl (>= 1.4.1)
 LinkingTo: Rcpp
+RoxygenNote: 7.1.1
