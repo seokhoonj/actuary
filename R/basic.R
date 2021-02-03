@@ -14,7 +14,7 @@ strati <- function(data, var, n, method, verbose) {
   if (missing(verbose)) verbose <- TRUE
   grp <- data[, .(n = .N), by = var]
   low <- min(grp$n)
-  grp[, s := max(low, n)]
+  grp[, s := min(low, n)]
   grp[, p := s/n]
   if (verbose) print(grp)
   ss <- strata(data = data, stratanames = var, size = grp$s, method = method)
