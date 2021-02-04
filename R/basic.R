@@ -2,8 +2,21 @@
 # basic functions ---------------------------------------------------------
 
 unilen <- function(x) length(unique(x))
-getsiz <- function(x) format(object.size(x), unit = "Mb")
-lsjoin <- function(..., by, all = FALSE, all.x = all, all.y = all, sort = TRUE) {
+getsize <- function(x) format(object.size(x), unit = "Mb")
+getmode <- function(x, na.rm = TRUE) {
+  if (na.rm) x <- x[!is.na(x)]
+  uniqx <- unique(x)
+  uniqx[which.max(tabulate(match(x, uniqx)))]
+}
+getsumm <- function(x) {
+  col <- names(x)
+  N <- nrow(x)
+  n <- sapply(x, function(x) sum(!is.na(x)))
+  missing <- sapply(x, function(x) sum(is.na(x)))
+  distinct <- sapply(x, unilen)
+  mode <- sapply(x, getmode)
+}
+join <- function(..., by, all = FALSE, all.x = all, all.y = all, sort = TRUE) {
   l <- list(...)
   Reduce(function(...) merge(..., by = by, all = all, all.x = all.x, all.y = all.y, sort = sort), l)
 }
