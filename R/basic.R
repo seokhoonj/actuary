@@ -52,6 +52,7 @@ strati <- function(data, var, size, method, verbose) {
   if (missing(method)) method <- "srswor"
   if (missing(verbose)) verbose <- TRUE
   grp <- data[, .(n = .N), by = var]
+  grp[, g := 1:nrow(grp)]
   if (size < 1) {
     grp[, s := ceiling(n*size)]
     grp[, p := s/n]
@@ -61,6 +62,12 @@ strati <- function(data, var, size, method, verbose) {
     grp[, p := s/n]
   }
   if (verbose) print(grp)
-  ss <- strata(data = data, stratanames = var, size = grp$s, method = method)
-  getdata(data, ss)
+  data[grp, on = var, g := g]
+  g <- data[["g"]]
+  s <- grp[["s"]]
+  v <- unlist(lapply(1:nrow(grp), function(x) sample(which(g == x), s[x])))
+  data[, g := NULL]
+  data[v]
+  # ss <- strata(data = data, stratanames = var, size = grp$s, method = method)
+  # getdata(data, ss)
 }
