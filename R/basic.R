@@ -61,7 +61,11 @@ strati <- function(data, var, size, method, verbose) {
     grp[, s := min(low, size)]
     grp[, p := s/n]
   }
-  if (verbose) print(grp)
+  if (verbose) {
+    cat("Sampling proportion:",
+        paste0(round(sum(grp$s) / sum(grp$n) * 100, 3), " %\n"))
+    print(grp)
+  }
   data[grp, on = var, g := g]
   g <- data[["g"]]
   s <- grp[["s"]]
