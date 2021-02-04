@@ -12,9 +12,10 @@ getsumm <- function(x) {
   col <- names(x)
   N <- nrow(x)
   n <- sapply(x, function(x) sum(!is.na(x)))
-  missing <- sapply(x, function(x) sum(is.na(x)))
-  distinct <- sapply(x, unilen)
+  miss <- sapply(x, function(x) sum(is.na(x)))
+  uniq <- sapply(x, unilen)
   mode <- sapply(x, getmode)
+  data.table(col, n, miss, uniq, prop = miss / N, mode)
 }
 join <- function(..., by, all = FALSE, all.x = all, all.y = all, sort = TRUE) {
   l <- list(...)
