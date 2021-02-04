@@ -21,6 +21,26 @@ rm_unique <- function(x) {
   uniqx <- sapply(x, unilen)
   x[, `:=`(names(uniqx[uniqx==1L]), NULL)]
 }
+glue_code <- function(x) paste0(x[!is.na(x)], collapse = "|")
+rcast <- function(x, id_var, value_var, prefix = "var", glue = TRUE) {
+  id_var <- vapply(substitute(id_var), deparse, FUN.VALUE = "character")
+  id_var <- names(x)[match(id_var, names(x), 0L)]
+  value_var <- deparse(substitute(value_var))
+  x[, `:=`(rank, rank(get(x), ties.method = "first")), by = id_var]
+  form <- formula(paste(paste(id_var, collapse = " + "), " ~ rank"))
+  z <- dcast.data.table(x, formula = form, value.var = value_var)
+  dcast_var <- paste0(prefix, str_pad(names(z)[-match(id_var, names(z), 0L)],
+                                      width = nchar(length(names(z)) - length(id_var)),
+                                      pad = "0"))
+  vars <- c(id_var, dcast_var)
+  setnames(z, vars)
+  if (glue) {
+    z <- data.table(z[, ..id_var], var = apply(z[, ..dcast_var], 1, glue_code))
+    setnames(z, c(id_var, prefix))
+  }
+  x[, rank := NULL]; gc()
+  return(z)
+}
 join <- function(..., by, all = FALSE, all.x = all, all.y = all, sort = TRUE) {
   l <- list(...)
   Reduce(function(...) merge(..., by = by, all = all, all.x = all.x, all.y = all.y, sort = sort), l)
