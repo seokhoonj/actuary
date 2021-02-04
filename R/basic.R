@@ -26,7 +26,7 @@ rcast <- function(x, id_var, value_var, prefix = "var", glue = TRUE) {
   id_var <- vapply(substitute(id_var), deparse, FUN.VALUE = "character")
   id_var <- names(x)[match(id_var, names(x), 0L)]
   value_var <- deparse(substitute(value_var))
-  x[, `:=`(rank, rank(get(x), ties.method = "first")), by = id_var]
+  x[, `:=`(rank, rank(get(value_var), ties.method = "first")), by = id_var]
   form <- formula(paste(paste(id_var, collapse = " + "), " ~ rank"))
   z <- dcast.data.table(x, formula = form, value.var = value_var)
   dcast_var <- paste0(prefix, str_pad(names(z)[-match(id_var, names(z), 0L)],
