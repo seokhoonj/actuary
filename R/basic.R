@@ -22,10 +22,11 @@ rm_unique <- function(x) {
   x[, `:=`(names(uniqx[uniqx==1L]), NULL)]
 }
 glue_code <- function(x) paste0(x[!is.na(x)], collapse = "|")
-rcast <- function(x, id_var, value_var, prefix = "var", glue = TRUE) {
+rcast <- function(x, id_var, value_var, prefix, glue = FALSE) {
   id_var <- vapply(substitute(id_var), deparse, FUN.VALUE = "character")
   id_var <- names(x)[match(id_var, names(x), 0L)]
   value_var <- deparse(substitute(value_var))
+  if (missing(prefix)) prefix <- value_var
   x[, `:=`(rank, rank(get(value_var), ties.method = "first")), by = id_var]
   form <- formula(paste(paste(id_var, collapse = " + "), " ~ rank"))
   z <- dcast.data.table(x, formula = form, value.var = value_var)
