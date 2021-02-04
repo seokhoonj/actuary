@@ -15,7 +15,7 @@ get_summary <- function(x) {
   missing <- sapply(x, function(x) sum(is.na(x)))
   distinct <- sapply(x, unilen)
   mode <- sapply(x, get_mode)
-  data.table(col, n, missing, distinct, prop = miss / N, mode)
+  data.table(col, n, missing, distinct, prop = missing / N, mode)
 }
 rm_unique <- function(x) {
   uniqx <- sapply(x, unilen)
