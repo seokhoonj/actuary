@@ -2,7 +2,7 @@
 # basic functions ---------------------------------------------------------
 
 unilen <- function(x) length(unique(x))
-get_size <- function(x) format(object.size(x), unit = "Mb")
+get_size <- function(x, unit = "Mb") format(object.size(x), unit = unit)
 get_mode <- function(x, na.rm = TRUE) {
   if (na.rm) x <- x[!is.na(x)]
   uniqx <- unique(x)
