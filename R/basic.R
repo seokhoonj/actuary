@@ -90,3 +90,10 @@ strati <- function(data, var, size, method, verbose) {
   # ss <- strata(data = data, stratanames = var, size = grp$s, method = method)
   # getdata(data, ss)
 }
+cut_threshold <- function(x) {
+  cut(abs(x),
+      breaks = c(0, .05, .1, .2, .3, .5, 1., max(abs(x)+1e-8)),
+      labels = c("< 0.05", "< 0.10", "< 0.20", "< 0.30", "< 0.50", "< 1.0", ">= 1.0"),
+      right = FALSE
+      )
+}
