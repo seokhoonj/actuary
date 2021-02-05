@@ -23,17 +23,32 @@ get_summ <- function(x) {
   mode <- sapply(x, get_mode)
   data.table(col, n, missing, distinct, prop = missing / N, mode)
 }
-get_prop <- function(data, id_var, uniq_var, multiple = 1, round = 5) {
+get_prop <- function(data, id_var, uniq_var, sum_var, multiple = 1, round = 5) {
   id_var <- vapply(substitute(id_var), deparse, FUN.VALUE = "character")
   id_var <- names(data)[match(id_var, names(data), 0L)]
   if (!missing(uniq_var)) {
     uniq_var <- deparse(substitute(uniq_var))
-    z <- data[, .(n = .N, uniq_n = uniqueN(get(uniq_var))), by = id_var]
-    z[, n_prop := round(n / sum(n) * multiple, round)]
-    z[, uniq_n_prop := round(uniq_n / sum(uniq_n) * multiple, round)]
+    if (!missing(sum_var)) {
+      sum_var <- deparse(substitute(sum_var))
+      z <- data[, .(n = .N, uniq_n = uniqueN(get(uniq_var)), sum = sum(get(sum_var))), by = id_var]
+      z[, n_prop := round(n / sum(n) * multiple, round)]
+      z[, uniq_n_prop := round(uniq_n / sum(uniq_n) * multiple, round)]
+      z[, sum_prop := round(sum / sum(sum) * multiple, round)]
+    } else {
+      z <- data[, .(n = .N, uniq_n = uniqueN(get(uniq_var))), by = id_var]
+      z[, n_prop := round(n / sum(n) * multiple, round)]
+      z[, uniq_n_prop := round(uniq_n / sum(uniq_n) * multiple, round)]
+    }
   } else {
-    z <- data[, .(n = .N), by = id_var]
-    z[, prop := round(n / sum(n) * multiple, round)]
+    if (!missing(sum_var)) {
+      sum_var <- deparse(substitute(sum_var))
+      z <- data[, .(n = .N, sum = sum(get(sum_var))), by = id_var]
+      z[, n_prop := round(n / sum(n) * multiple, round)]
+      z[, sum_prop := round(sum / sum(sum) * multiple, round)]
+    } else {
+      z <- data[, .(n = .N), by = id_var]
+      z[, prop := round(n / sum(n) * multiple, round)]
+    }
   }
   setorderv(z, id_var)
   print(z)
