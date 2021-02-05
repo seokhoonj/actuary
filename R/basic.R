@@ -98,6 +98,13 @@ strati <- function(data, var, size, method, verbose) {
   # ss <- strata(data = data, stratanames = var, size = grp$s, method = method)
   # getdata(data, ss)
 }
+cut_age <- function(data, var, interval, right = FALSE) {
+  age <- eval(substitute(var), data)
+  min <- floor(min(age) / interval) * interval
+  max <- ceiling(max(age) / interval) * interval
+  if (max(age) == max) max <- ceiling(max(age) / interval + 1) * interval
+  cut(age, breaks = seq(min, max, interval), right = right)
+}
 cut_threshold <- function(x) {
   cut(abs(x),
       breaks = c(0, .05, .1, .2, .3, .5, 1., max(abs(x)+1e-8)),
