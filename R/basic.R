@@ -21,7 +21,7 @@ get_prop <- function(data, id_var, uniq_var, multiple = 1, round = 5) {
   id_var <- vapply(substitute(id_var), deparse, FUN.VALUE = "character")
   id_var <- names(data)[match(id_var, names(data), 0L)]
   uniq_var <- deparse(substitute(uniq_var))
-  z <- data[, .(n = .N, uniqueN(get(uniq_var))), by = id_var]
+  z <- data[, .(n = .N, uniq_n = uniqueN(get(uniq_var))), by = id_var]
   z[, n_prop := round(n / sum(n) * multiple, round)]
   z[, uniq_n_prop := round(uniq_n / sum(uniq_n) * multiple, round)]
   setrorderv(z, id_var)
