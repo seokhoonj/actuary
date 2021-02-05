@@ -24,7 +24,7 @@ get_prop <- function(data, id_var, uniq_var, multiple = 1, round = 5) {
   z <- data[, .(n = .N, uniq_n = uniqueN(get(uniq_var))), by = id_var]
   z[, n_prop := round(n / sum(n) * multiple, round)]
   z[, uniq_n_prop := round(uniq_n / sum(uniq_n) * multiple, round)]
-  setrorderv(z, id_var)
+  setorderv(z, id_var)
   print(z)
   invisible(z)
 }
