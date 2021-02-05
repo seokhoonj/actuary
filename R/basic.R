@@ -17,6 +17,10 @@ get_summary <- function(x) {
   mode <- sapply(x, get_mode)
   data.table(col, n, missing, distinct, prop = missing / N, mode)
 }
+rm_ws <- function(x) {
+  col <- names(sapply(x, class)[sapply(x, class) == "character"])
+  x[, (col) := lapply(.SD, trimws), .SDcols = col]
+}
 rm_unique <- function(x) {
   uniqx <- sapply(x, unilen)
   x[, `:=`(names(uniqx[uniqx==1L]), NULL)]
