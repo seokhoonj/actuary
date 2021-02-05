@@ -8,7 +8,7 @@ get_mode <- function(x, na.rm = TRUE) {
   uniqx <- unique(x)
   uniqx[which.max(tabulate(match(x, uniqx)))]
 }
-get_summary <- function(x) {
+get_summ <- function(x) {
   col <- names(x)
   N <- nrow(x)
   n <- sapply(x, function(x) sum(!is.na(x)))
@@ -32,7 +32,7 @@ rm_ws <- function(x) {
   col <- names(sapply(x, class)[sapply(x, class) == "character"])
   x[, (col) := lapply(.SD, trimws), .SDcols = col]
 }
-rm_unique <- function(x) {
+rm_uniq <- function(x) {
   uniqx <- sapply(x, unilen)
   x[, `:=`(names(uniqx[uniqx==1L]), NULL)]
 }
