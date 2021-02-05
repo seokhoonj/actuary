@@ -111,3 +111,6 @@ cut_threshold <- function(x) {
       labels = c("< 0.05", "< 0.10", "< 0.20", "< 0.30", "< 0.50", "< 1.0", ">= 1.0"),
       right = FALSE)
 }
+calc_rp <- function(f, r, w, d, qs, qs_r, denom) {
+  f * r * (1-w) * (1-d) * qs * qs_r / denom
+}
