@@ -3,7 +3,10 @@
 
 unilen <- function(x) length(unique(x))
 get_pattern <- function(pattern, x) {
-  unname(unlist(sapply(x, function(x) regmatches(x, gregexpr(pattern, x)))))
+  r <- regexpr(pattern, x, perl = TRUE)
+  z <- rep(NA, length(x))
+  z[r != -1] <- regmatches(x, r)
+  z
 }
 get_size <- function(x, unit = "Mb") format(object.size(x), unit = unit)
 get_mode <- function(x, na.rm = TRUE) {
