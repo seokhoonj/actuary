@@ -20,11 +20,16 @@ get_summ <- function(x) {
 get_prop <- function(data, id_var, uniq_var, multiple = 1, round = 5) {
   id_var <- vapply(substitute(id_var), deparse, FUN.VALUE = "character")
   id_var <- names(data)[match(id_var, names(data), 0L)]
-  uniq_var <- deparse(substitute(uniq_var))
-  z <- data[, .(n = .N, uniq_n = uniqueN(get(uniq_var))), by = id_var]
-  z[, n_prop := round(n / sum(n) * multiple, round)]
-  z[, uniq_n_prop := round(uniq_n / sum(uniq_n) * multiple, round)]
-  setorderv(z, id_var)
+  if (!missing(uniq_var)) {
+    uniq_var <- deparse(substitute(uniq_var))
+    z <- data[, .(n = .N, uniq_n = uniqueN(get(uniq_var))), by = id_var]
+    z[, n_prop := round(n / sum(n) * multiple, round)]
+    z[, uniq_n_prop := round(uniq_n / sum(uniq_n) * multiple, round)]
+    setorderv(z, id_var)
+  } else {
+    z <- data[, .(n = .N), by = id_var]
+    z[, prop := round(n / sum(n) * multiple, round)]
+  }
   print(z)
   invisible(z)
 }
@@ -94,6 +99,5 @@ cut_threshold <- function(x) {
   cut(abs(x),
       breaks = c(0, .05, .1, .2, .3, .5, 1., max(abs(x)+1e-8)),
       labels = c("< 0.05", "< 0.10", "< 0.20", "< 0.30", "< 0.50", "< 1.0", ">= 1.0"),
-      right = FALSE
-      )
+      right = FALSE)
 }
