@@ -152,9 +152,8 @@ theme_save <- function(x.angle = 0) {
     legend.position = "bottom"
   )
 }
-
-base26 <- function(x) {
-  tbl <- 1:26L
+to_a1_col <- function(x) {
+  tbl <- seq_along(LETTERS)
   names(tbl) <- LETTERS
 
   if (x <= 26) {
@@ -180,6 +179,16 @@ base26 <- function(x) {
     }
   }
   return(paste0(names(tbl[z]), collapse = ""))
+}
+to_r1c1_col <- function(x) {
+  tbl <- seq_along(LETTERS)
+  names(tbl) <- LETTERS
+
+  col <- get_pattern("[A-Z]+", x)
+  spl <- unlist(strsplit(col, split = "", perl = TRUE))
+  num <- tbl[spl]
+  dig <- rev(seq_along(num)-1)
+  return(sum(num * 26L^dig))
 }
 mv_cell <- function(cell, r, c) {
   tbl <- seq_along(LETTERS)
