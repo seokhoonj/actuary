@@ -1,6 +1,6 @@
 useDynLib(actuary, .registration=TRUE)
 importFrom(Rcpp, evalCpp)
-exportPattern("^[[:alpha:]]+")
+#exportPattern("^[[:alpha:]]+")
 
 export(unilen)
 export(rm_ws)
