@@ -132,3 +132,23 @@ cut_threshold <- function(x) {
 calc_rp <- function(f, r, w, d, qs, qs_r, denom) {
   f * r * (1-w) * (1-d) * qs * qs_r / denom
 }
+theme_view <- function(x.angle = 0) {
+  theme(
+    text = element_text(family = "Malgun Gothic"),
+    title = element_text(family = "Malgun Gothic"),
+    strip.text.x = element_text(face = "bold"),
+    axis.text.x = element_text(face = "bold", angle = angle),
+    axis.text.y = element_text(face = "bold"),
+    legend.position = "bottom"
+  )
+}
+theme_save <- function(x.angle = 0) {
+  theme(
+    text = element_text(family = "Malgun Gothic"),
+    title = element_text(family = "Malgun Gothic"),
+    strip.text.x = element_text(size = 17, face = "bold"),
+    axis.text.x = element_text(size = 12, face = "bold", angle = angle),
+    axis.text.y = element_text(size = 12, face = "bold"),
+    legend.position = "bottom"
+  )
+}
