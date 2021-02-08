@@ -232,6 +232,7 @@ get_rp_table <- function(path, sheet, m_cell_s, m_cell_e, f_cell_s, f_cell_e, ce
   rp_table_f <- cbind(rp_pre, rp_table_f)
   rp_table_f <- melt(data = rp_table_f, id.var = c("cedent", "age", "gender"), variable.name = "risk", value.name = "rate")
 
-  rp_table <- cbind(rp_table_m, rp_table_f)
+  rp_table <- rbind(rp_table_m, rp_table_f)
+  setorder(rp_table, risk, gender, age)
   return(rp_table)
 }
