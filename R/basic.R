@@ -137,7 +137,7 @@ theme_view <- function(x.angle = 0) {
     text = element_text(family = "Malgun Gothic"),
     title = element_text(family = "Malgun Gothic"),
     strip.text.x = element_text(face = "bold"),
-    axis.text.x = element_text(face = "bold", angle = angle),
+    axis.text.x = element_text(face = "bold", angle = x.angle),
     axis.text.y = element_text(face = "bold"),
     legend.position = "bottom"
   )
@@ -147,7 +147,7 @@ theme_save <- function(x.angle = 0) {
     text = element_text(family = "Malgun Gothic"),
     title = element_text(family = "Malgun Gothic"),
     strip.text.x = element_text(size = 17, face = "bold"),
-    axis.text.x = element_text(size = 12, face = "bold", angle = angle),
+    axis.text.x = element_text(size = 12, face = "bold", angle = x.angle),
     axis.text.y = element_text(size = 12, face = "bold"),
     legend.position = "bottom"
   )
