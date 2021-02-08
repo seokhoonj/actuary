@@ -154,8 +154,13 @@ theme_save <- function(x.angle = 0) {
 }
 
 base26 <- function(x) {
-  tbl <- seq_along(LETTERS)
+  tbl <- 1:26L
   names(tbl) <- LETTERS
+
+  if (x <= 26) {
+    return(paste0(names(tbl[x]), collapse = ""))
+    break
+  }
 
   quo_vec <- vector(mode = "integer")
   rem_vec <- vector(mode = "integer")
@@ -166,12 +171,15 @@ base26 <- function(x) {
     x <- quo
     i <- i+1
   }
-  if (length(rem_vec) > 0) {
-    z <- c(quo_vec[length(quo_vec)], rev(rem_vec))
-  } else {
-    z <- x
+  quo <- quo_vec[length(quo_vec)]
+  z <- c(quo, rev(rem_vec))
+  for (i in rev(2:length(z))) {
+    if (z[i] == 0) {
+      z[i] <- 26L
+      z[i-1] <- z[i-1] - 1L
+    }
   }
-  paste0(names(tbl[z]), collapse = "")
+  return(paste0(names(tbl[z]), collapse = ""))
 }
 mv_cell <- function(cell, r, c) {
   tbl <- seq_along(LETTERS)
