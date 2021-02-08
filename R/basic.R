@@ -152,3 +152,40 @@ theme_save <- function(x.angle = 0) {
     legend.position = "bottom"
   )
 }
+
+base26 <- function(x) {
+  tbl <- seq_along(LETTERS)
+  names(tbl) <- LETTERS
+
+  quo_vec <- vector(mode = "integer")
+  rem_vec <- vector(mode = "integer")
+  i <- 1L
+  while (x > 26) {
+    quo_vec[i] <- quo <- x %/% 26
+    rem_vec[i] <- rem <- x %% 26
+    x <- quo
+    i <- i+1
+  }
+  if (length(rem_vec) > 0) {
+    z <- c(quo_vec[length(quo_vec)], rev(rem_vec))
+  } else {
+    z <- x
+  }
+  paste0(names(tbl[z]), collapse = "")
+}
+mv_cell <- function(cell, r, c) {
+  tbl <- seq_along(LETTERS)
+  names(tbl) <- LETTERS
+
+  row <- as.integer(get_pattern("[0-9]+", cell))
+  row <- row + r
+
+  col <- get_pattern("[A-Z]+", cell)
+  spl <- unlist(strsplit(col, split = "", perl = TRUE))
+  num <- tbl[spl]
+  dig <- rev(seq_along(num)-1)
+  col <- sum(num * 26^dig)
+  col <- col + c
+
+  paste0(base26(col), row)
+}
