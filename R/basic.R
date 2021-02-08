@@ -211,3 +211,27 @@ di_cell <- function(x, y) {
   c_d <- c2 - c1
   return(c(r_d, c_d))
 }
+get_rp_table <- function(path, sheet, m_cell_s, m_cell_e, f_cell_s, f_cell_e, cedent) {
+  rp_table_m <- read_excel(path = path,
+                           sheet = sheet,
+                           range = anchored(m_cell_s, dim = di_cell(m_cell_s, m_cell_e)+1L),
+                           col_names = TRUE)
+  setDT(rp_table_m)
+  rp_table_m <- rp_table_m[complete.cases(rp_table_m)]
+  rp_pre = data.table(cedent = cedent, age = (1:nrow(rp_table_m))-1L, gender = "M")
+  rp_table_m <- cbind(rp_pre, rp_table_m)
+  rp_table_m <- melt(data = rp_table_m, id.var = c("cedent", "age", "gender"), variable.name = "risk", value.name = "rate")
+
+  rp_table_f = read_excel(path = path,
+                          sheet = sheet,
+                          range = anchored(f_cell_s, dim = di_cell(f_cell_s, f_cell_e)+1L),
+                          col_names = TRUE)
+  setDT(rp_table_f)
+  rp_table_f <- rp_table_f[complete.cases(rp_table_f)]
+  rp_pre = data.table(cedent = cedent, age = (1:nrow(rp_table_f))-1L, gender = "F")
+  rp_table_f <- cbind(rp_pre, rp_table_f)
+  rp_table_f <- melt(data = rp_table_f, id.var = c("cedent", "age", "gender"), variable.name = "risk", value.name = "rate")
+
+  rp_table <- cbind(rp_table_m, rp_table_f)
+  return(rp_table)
+}
