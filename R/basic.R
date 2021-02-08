@@ -202,3 +202,12 @@ mv_cell <- function(cell, r, c) {
 
   paste0(to_a1_col(col), row)
 }
+di_cell <- function(x, y) {
+  r1 <- as.integer(get_pattern("[0-9]+", x))
+  r2 <- as.integer(get_pattern("[0-9]+", y))
+  c1 <- to_r1c1_col(get_pattern("[A-Z]+", x))
+  c2 <- to_r1c1_col(get_pattern("[A-Z]+", y))
+  r_d <- r2 - r1
+  c_d <- c2 - c1
+  return(c(r_d, c_d))
+}
