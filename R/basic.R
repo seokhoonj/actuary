@@ -197,12 +197,8 @@ mv_cell <- function(cell, r, c) {
   row <- as.integer(get_pattern("[0-9]+", cell))
   row <- row + r
 
-  col <- get_pattern("[A-Z]+", cell)
-  spl <- unlist(strsplit(col, split = "", perl = TRUE))
-  num <- tbl[spl]
-  dig <- rev(seq_along(num)-1)
-  col <- sum(num * 26^dig)
+  col <- to_r1c1_col(col)
   col <- col + c
 
-  paste0(base26(col), row)
+  paste0(to_a1_col(col), row)
 }
