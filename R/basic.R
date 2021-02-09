@@ -132,6 +132,9 @@ cut_threshold <- function(x) {
 calc_rp <- function(f, r, w, d, qs, qs_r, denom) {
   f * r * (1-w) * (1-d) * qs * qs_r / denom
 }
+calc_rate <- function(rp, f, w, d, qs, qs_r, denom) {
+  rp / (f * (1-w) * (1-d) * qs * qs_r / denom)
+}
 theme_view <- function(x.angle = 0) {
   theme(
     text = element_text(family = "Malgun Gothic"),
@@ -168,7 +171,7 @@ to_a1_col <- function(x) {
     quo_vec[i] <- quo <- x %/% 26
     rem_vec[i] <- rem <- x %% 26
     x <- quo
-    i <- i+1
+    i <- i+1L
   }
   quo <- quo_vec[length(quo_vec)]
   z <- c(quo, rev(rem_vec))
