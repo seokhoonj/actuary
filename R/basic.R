@@ -17,6 +17,7 @@ get_size <- function(x, unit = "Mb") {
   } else {
     obj <- env[match(var, env, 0L)]
   }
+  if (!length(obj)) stop("No object's found.")
   sz <- sapply(obj, function(x) object.size(get(x)))
   szs <- c(sz, sum(sz))
   m <- switch(tolower(unit), mb = 1, mb = 2, gb = 3)
