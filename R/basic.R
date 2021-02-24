@@ -176,7 +176,6 @@ to_a1_col <- function(x) {
 
   if (x <= 26) {
     return(paste0(names(tbl[x]), collapse = ""))
-    break
   }
 
   quo_vec <- vector(mode = "integer")
