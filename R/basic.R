@@ -25,7 +25,7 @@ get_size <- function(x, unit = "Mb") {
   return(z)
 }
 get_mode <- function(x, na.rm = TRUE) {
-  if (na.rm) x <- x[!is.na(x)]
+  if (na.rm) x <- x[!is.na(x) & x != ""]
   uniqx <- unique(x)
   uniqx[which.max(tabulate(match(x, uniqx)))]
 }
