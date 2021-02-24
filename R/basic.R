@@ -8,7 +8,21 @@ get_pattern <- function(pattern, x) {
   z[r != -1] <- regmatches(x, r)
   z
 }
-get_size <- function(x, unit = "Mb") format(object.size(x), unit = unit)
+get_size <- function(x, unit = "Mb") {
+  env <- ls(envir = parent.frame())
+  var <- vapply(substitute(x), deparse, FUN.VALUE = "character")
+  var <- gsub("\"", "", var)
+  if (any(var == "ls")) {
+    obj <- env
+  } else {
+    obj <- env[match(var, env, 0L)]
+  }
+  sz <- sapply(obj, function(x) object.size(get(x)))
+  szs <- c(sz, sum(sz))
+  m <- switch(tolower(unit), mb = 1, mb = 2, gb = 3)
+  z <- data.table(obj = c(names(sz), "total"), size = round(szs / 1024^m, 3), unit = unit)
+  return(z)
+}
 get_mode <- function(x, na.rm = TRUE) {
   if (na.rm) x <- x[!is.na(x)]
   uniqx <- unique(x)
