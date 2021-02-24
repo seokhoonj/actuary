@@ -29,14 +29,15 @@ get_mode <- function(x, na.rm = TRUE) {
   uniqx <- unique(x)
   uniqx[which.max(tabulate(match(x, uniqx)))]
 }
-get_summ <- function(x) {
+get_info <- function(x) {
   col <- names(x)
+  class <- sapply(x, class)
   N <- nrow(x)
   n <- sapply(x, function(x) sum(!is.na(x)))
   missing <- sapply(x, function(x) sum(is.na(x)))
   distinct <- sapply(x, unilen)
   mode <- sapply(x, get_mode)
-  data.table(col, n, missing, distinct, prop = missing / N, mode)
+  data.table(col, class, n, missing, distinct, prop = missing / N, mode)
 }
 get_prop <- function(data, id_var, uniq_var, sum_var, multiple = 1, round = 5) {
   id_var <- vapply(substitute(id_var), deparse, FUN.VALUE = "character")
