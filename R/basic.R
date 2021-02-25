@@ -18,7 +18,7 @@ get_size <- function(x, unit = "Mb") {
     obj <- env[match(var, env, 0L)]
   }
   if (!length(obj)) stop("No object's found.")
-  sz <- sapply(obj, function(x) object.size(get(x)))
+  sz <- sapply(obj, function(x) object.size(get(x, envir = parent.frame())))
   szs <- c(sz, sum(sz))
   m <- switch(tolower(unit), kb = 1, mb = 2, gb = 3)
   z <- data.table(obj = c(names(sz), "total"), size = round(szs / 1024^m, 3), unit = unit)
