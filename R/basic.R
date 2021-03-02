@@ -2,11 +2,17 @@
 # basic functions ---------------------------------------------------------
 
 unilen <- function(x) length(unique(x))
+get_class <- function(x) {
+  col <- names(x)
+  class <- sapply(x, class)
+  z <- data.table(col, class)
+  return(z)
+}
 get_pattern <- function(pattern, x) {
   r <- regexpr(pattern, x, perl = TRUE)
   z <- rep(NA, length(x))
   z[r != -1] <- regmatches(x, r)
-  z
+  return(z)
 }
 get_size <- function(x, unit = "Mb") {
   env <- ls(envir = parent.frame())
