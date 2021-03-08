@@ -3,6 +3,7 @@ importFrom(Rcpp, evalCpp)
 #exportPattern("^[[:alpha:]]+")
 
 export(unilen)
+export(rep.data.table)
 export(to_a1_col)
 export(to_r1c1_col)
 export(mv_cell)
