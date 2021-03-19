@@ -110,7 +110,8 @@ join <- function(..., by, all = FALSE, all.x = all, all.y = all, sort = TRUE) {
   l <- list(...)
   Reduce(function(...) merge(..., by = by, all = all, all.x = all.x, all.y = all.y, sort = sort), l)
 }
-strati <- function(data, var, size, verbose) {
+strati <- function(data, var, size, replace, verbose) {
+  if (missing(verbose)) replace <- FALSE
   if (missing(verbose)) verbose <- TRUE
   var <- vapply(substitute(var), deparse, FUN.VALUE = "character")
   var <- names(data)[match(var, names(data), 0L)]
@@ -129,10 +130,11 @@ strati <- function(data, var, size, verbose) {
         paste0(round(sum(grp$s) / sum(grp$n) * 100, 3), " %\n"))
     print(grp)
   }
+  attr(grp, "sampling")
   data[grp, on = var, g := g]
   g <- data[["g"]]
   s <- grp[["s"]]
-  v <- unlist(lapply(1:nrow(grp), function(x) sample(which(g == x), s[x])))
+  v <- unlist(lapply(1:nrow(grp), function(x) sample(which(g == x), s[x], replace = replace)))
   data[, g := NULL]
   data[v]
   # ss <- strata(data = data, stratanames = var, size = grp$s, method = method)
