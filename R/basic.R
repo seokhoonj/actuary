@@ -111,7 +111,7 @@ join <- function(..., by, all = FALSE, all.x = all, all.y = all, sort = TRUE) {
   Reduce(function(...) merge(..., by = by, all = all, all.x = all.x, all.y = all.y, sort = sort), l)
 }
 strati <- function(data, var, size, replace, verbose) {
-  if (missing(verbose)) replace <- FALSE
+  if (missing(replace)) replace <- FALSE
   if (missing(verbose)) verbose <- TRUE
   var <- vapply(substitute(var), deparse, FUN.VALUE = "character")
   var <- names(data)[match(var, names(data), 0L)]
@@ -127,7 +127,7 @@ strati <- function(data, var, size, replace, verbose) {
   }
   if (verbose) {
     cat("Sampling proportion:",
-        paste0(round(sum(grp$s) / sum(grp$n) * 100, 3), " %\n"))
+        paste0(round(sum(grp$s) / sum(grp$n) * 100, 3), " % ( replace = ", as.character(replace), " )\n"))
     print(grp)
   }
   attr(grp, "sampling")
