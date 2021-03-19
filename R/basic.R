@@ -130,7 +130,6 @@ strati <- function(data, var, size, replace, verbose) {
         paste0(round(sum(grp$s) / sum(grp$n) * 100, 3), " % ( replace = ", as.character(replace), " )\n"))
     print(grp)
   }
-  attr(grp, "sampling")
   if (nrow(grp) > 1) {
     data[grp, on = var, g := g]
   } else {
@@ -140,7 +139,7 @@ strati <- function(data, var, size, replace, verbose) {
   s <- grp[["s"]]
   v <- unlist(lapply(1:nrow(grp), function(x) sample(which(g == x), s[x], replace = replace)))
   data[, g := NULL]
-  data[v]
+  z <- data[v]
   # ss <- strata(data = data, stratanames = var, size = grp$s, method = method)
   # getdata(data, ss)
 }
