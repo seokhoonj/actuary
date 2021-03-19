@@ -139,7 +139,7 @@ strati <- function(data, var, size, replace, verbose) {
   s <- grp[["s"]]
   v <- unlist(lapply(1:nrow(grp), function(x) sample(which(g == x), s[x], replace = replace)))
   data[, g := NULL]
-  z <- data[v]
+  data[v]
   # ss <- strata(data = data, stratanames = var, size = grp$s, method = method)
   # getdata(data, ss)
 }
