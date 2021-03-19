@@ -126,8 +126,8 @@ strati <- function(data, var, size, replace, verbose) {
     grp[, p := s/n]
   }
   if (verbose) {
-    cat("Sampling proportion:",
-        paste0(round(sum(grp$s) / sum(grp$n) * 100, 3), " % ( replace = ", as.character(replace), " )\n"))
+    cat(sprintf("Sampling proportion: %g %% ( replace = %s )",
+        round(sum(grp$s) / sum(grp$n) * 100, 3), replace), "\n")
     print(grp)
   }
   if (nrow(grp) > 1) {
