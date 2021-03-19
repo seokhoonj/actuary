@@ -131,7 +131,11 @@ strati <- function(data, var, size, replace, verbose) {
     print(grp)
   }
   attr(grp, "sampling")
-  data[grp, on = var, g := g]
+  if (nrow(grp) > 1) {
+    data[grp, on = var, g := g]
+  } else {
+    data[, g := 1L]
+  }
   g <- data[["g"]]
   s <- grp[["s"]]
   v <- unlist(lapply(1:nrow(grp), function(x) sample(which(g == x), s[x], replace = replace)))
