@@ -5,3 +5,7 @@ rcpp_hello_world <- function() {
     .Call(`_actuary_rcpp_hello_world`)
 }
 
+regmatch <- function(m, x) {
+    .Call(`_actuary_regmatch`, m, x)
+}
+
