@@ -2,7 +2,9 @@
 # basic functions ---------------------------------------------------------
 
 unilen <- function(x) length(unique(x))
-regmatch <- function(m, x) rcpp_regmatch(m, x)
+regmatch <- function(m, x, delim = "|") {
+  rcpp_regmatch(m, x, delim)
+}
 rep.data.table <- function(x, ...) as.data.table(lapply(x, rep, ...))
 get_class <- function(x) {
   col <- names(x)

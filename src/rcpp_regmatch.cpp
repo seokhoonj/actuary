@@ -1,20 +1,30 @@
 #include <Rcpp.h>
+#include <iostream>
 #include <vector>
 #include <regex>
 using namespace Rcpp;
 
 // [[Rcpp::export]]
-StringVector regmatch(std::string m, std::vector<std::string> x) {
-  std::regex re(m);
-  std::smatch match;
+StringVector regmatch(std::string m, std::vector<std::string>& x, std::string delim) {
+  std::string s;
+  std::vector<std::string> ss;
   std::vector<std::string> res;
-  res.resize(res.size());
-  for (const auto &s : x) {
-    if (std::regex_match(s, match, re)) {
-      for (size_t i = 0; i < match.size(); i++) {
-        res[i] = match[i].str();
-      }
+  for (size_t i = 0; i < x.size(); ++i) {
+    res.clear();
+    std::regex re(m);
+    std::smatch match;
+    auto start = std::sregex_iterator(x[i].begin(), x[i].end(), re);
+    auto end = std::sregex_iterator();
+    while (start != end) {
+      res.push_back(start->str());
+      ++start;
     }
-  }
-  return(wrap(res));
+    s.clear();
+    for (const auto &piece : res) {
+      s += piece;
+      if (piece != res.back()) s += delim;
+      }
+    ss.push_back(s);
+    }
+  return wrap(ss);
 }

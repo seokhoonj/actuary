@@ -6,20 +6,21 @@
 using namespace Rcpp;
 
 // regmatch
-StringVector regmatch(std::string m, std::vector<std::string> x);
-RcppExport SEXP _actuary_regmatch(SEXP mSEXP, SEXP xSEXP) {
+StringVector regmatch(std::string m, std::vector<std::string>& x, std::string delim);
+RcppExport SEXP _actuary_regmatch(SEXP mSEXP, SEXP xSEXP, SEXP delimSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< std::string >::type m(mSEXP);
-    Rcpp::traits::input_parameter< std::vector<std::string> >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(regmatch(m, x));
+    Rcpp::traits::input_parameter< std::vector<std::string>& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< std::string >::type delim(delimSEXP);
+    rcpp_result_gen = Rcpp::wrap(regmatch(m, x, delim));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_actuary_regmatch", (DL_FUNC) &_actuary_regmatch, 2},
+    {"_actuary_regmatch", (DL_FUNC) &_actuary_regmatch, 3},
     {NULL, NULL, 0}
 };
 
