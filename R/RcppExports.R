@@ -5,3 +5,7 @@ regmatch <- function(m, x, delim) {
     .Call(`_actuary_regmatch`, m, x, delim)
 }
 
+spl_prm_cnt <- function(x, n) {
+    .Call(`_actuary_spl_prm_cnt`, x, n)
+}
+

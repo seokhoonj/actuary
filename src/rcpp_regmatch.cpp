@@ -1,5 +1,4 @@
 #include <Rcpp.h>
-#include <iostream>
 #include <vector>
 #include <regex>
 using namespace Rcpp;

@@ -18,9 +18,22 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// spl_prm_cnt
+NumericMatrix spl_prm_cnt(IntegerMatrix x, int n);
+RcppExport SEXP _actuary_spl_prm_cnt(SEXP xSEXP, SEXP nSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerMatrix >::type x(xSEXP);
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    rcpp_result_gen = Rcpp::wrap(spl_prm_cnt(x, n));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_actuary_regmatch", (DL_FUNC) &_actuary_regmatch, 3},
+    {"_actuary_spl_prm_cnt", (DL_FUNC) &_actuary_spl_prm_cnt, 2},
     {NULL, NULL, 0}
 };
 
