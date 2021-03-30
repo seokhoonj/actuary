@@ -2,7 +2,6 @@
 # basic functions ---------------------------------------------------------
 
 unilen <- function(x) length(unique(x))
-spl_prm_cnt <- function(x, n) rcpp_spl_prm_cnt(x, n)
 rep.data.table <- function(x, ...) as.data.table(lapply(x, rep, ...))
 get_class <- function(x) {
   col <- names(x)

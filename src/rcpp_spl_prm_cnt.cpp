@@ -9,8 +9,8 @@ NumericMatrix spl_prm_cnt(IntegerMatrix x, int n) {
   NumericMatrix z(o*n, m);
   for (int k = 0; k < o; ++k) {
     for (int j = 0; j < m; ++j) {
-      int quo = x[j] / 12;
-      int rem = x[j] % 12;
+      int quo = x(k, j) / 12;
+      int rem = x(k, j) % 12;
       for (int i = k*n; i < (k+1)*n; ++i) {
         if (i-k*n < quo) {
           z(i, j) = 12;
